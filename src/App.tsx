@@ -18,8 +18,9 @@ function Square({
 function App() {
   const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
+  const [winner, setWinner] = useState<string | null>(null);
 
-  function calcWin(squares) {
+  function calcWin(squares: (string | null)[]) {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -44,8 +45,8 @@ function App() {
     return null;
   }
 
-  function handleClick(i) {
-    if (squares[i]) {
+  function handleClick(i: number) {
+    if (squares[i] || winner) {
       return;
     }
     const nextSquares = squares.slice();
@@ -53,21 +54,27 @@ function App() {
     setSquares(nextSquares);
     setXIsNext(!xIsNext);
 
-    if (calcWin(nextSquares)) {
-      //make the winner show up
+    const gameWinner = calcWin(nextSquares);
+    if (gameWinner) {
+      setWinner(gameWinner);
     }
   }
 
   function handleReset() {
     setSquares(Array(9).fill(null));
     setXIsNext(true);
+    setWinner(null);
   }
 
   return (
     <main className="tictactoe">
       <div className="board">
         <h1>tic tac toe baby</h1>
-        <p className="turn">Turn: {xIsNext ? "X" : "O"} </p>
+        {winner ? (
+          <p className="winner">🎉 Winner: {winner} 🎉</p>
+        ) : (
+          <p className="turn">Turn: {xIsNext ? "X" : "O"} </p>
+        )}
         <div className="grid-3">
           {squares.map((square, i) => (
             <Square

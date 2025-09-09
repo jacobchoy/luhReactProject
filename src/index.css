@@ -11,6 +11,6 @@ body,
 
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  background: linear-gradient(to bottom right, #1748, #274c83);
+  background: linear-gradient(to bottom, rgba(175, 82, 121, 0.533), #274c83);
   line-height: 1.5;
 }
